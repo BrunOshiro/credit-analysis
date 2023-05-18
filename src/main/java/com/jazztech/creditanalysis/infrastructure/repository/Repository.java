@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+@org.springframework.stereotype.Repository
 public interface Repository extends JpaRepository<Entity, UUID> {
-    List<Entity> findByCpf(String cpf);
+    List<Entity> findByClientCpf(String clientCpf);
 }

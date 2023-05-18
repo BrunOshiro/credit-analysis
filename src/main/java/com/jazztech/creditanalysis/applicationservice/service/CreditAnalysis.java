@@ -35,7 +35,7 @@ public class CreditAnalysis {
         //Credit Analysis
         final Domain updatedCreditAnalysisDomain = getCreditAnalysis(updatedClientDomain);
 
-        //Save it to database
+        //Save into database
         final Entity entity = mapper.domainToEntity(updatedCreditAnalysisDomain);
         final Entity savedAnalysis = repository.save(entity);
 
@@ -55,24 +55,28 @@ public class CreditAnalysis {
 
     // Credit Analysis
     private Domain getCreditAnalysis(Domain updatedClientDomain) {
-        double approvedLimit;
         final Double requestedAmount = updatedClientDomain.requestedAmount();
         Double monthlyIncome = updatedClientDomain.monthlyIncome();
         final Double maxMonthlyIncome = 50000.00;
         final Double maxApprovalPercentage = .30;
         final Double minApprovalPercentage = .15;
         final double withdrawLimit = .1;
-        final Double annualInterest = 0.15;
+        final Double annualInterest = .15;
 
+        // Check if monthlyIncome is greater than maximum allowed
         monthlyIncome = (monthlyIncome > maxMonthlyIncome) ? maxMonthlyIncome : monthlyIncome;
 
+        // Calculate the approved limit
+        final double approvedLimit;
         if (requestedAmount < monthlyIncome) {
             if (requestedAmount > monthlyIncome * .5) {
                 approvedLimit = monthlyIncome * minApprovalPercentage;
+            } else {
+                approvedLimit = monthlyIncome * maxApprovalPercentage;
             }
-            approvedLimit = monthlyIncome * maxApprovalPercentage;
+        } else {
+            approvedLimit = 0.00;
         }
-        approvedLimit = 0.00;
 
         final Double withdraw = approvedLimit * withdrawLimit;
 

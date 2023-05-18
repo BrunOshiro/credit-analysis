@@ -21,9 +21,9 @@ public class Search {
     private final Mapper mapper;
 
     @Transactional
-    public List<ResponseDto> byCpf(@Valid String cpf) {
-        final List<Entity> entities = StringUtils.isBlank(cpf)
-                ? repository.findAll() : repository.findByCpf(cpf);
+    public List<ResponseDto> byCpf(@Valid String clientCpf) {
+        final List<Entity> entities = StringUtils.isBlank(clientCpf)
+                ? repository.findAll() : repository.findByClientCpf(clientCpf);
         LOGGER.info("Credit Analysis Listed by CPF Successfully");
         return mapper.listEntityToListDto(entities);
     }
