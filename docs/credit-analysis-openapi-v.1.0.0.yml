@@ -65,20 +65,6 @@ paths:
       summary: Get all Analysis
       tags:
         - credit analysis
-      parameters:
-        - name: cpf
-          in: query
-          description: client CPF
-          required: false
-          schema:
-            type: string
-        - name: clientId
-          in: query
-          description: client id
-          required: false
-          schema:
-            type: string
-            format: uuid
       responses:
         '200':
           description: Successful response
@@ -117,18 +103,18 @@ paths:
                       format: date-time
         '404':
           description: Analysis not found
-  /credit/analysis/{id}:
+  /credit/analysis/{cpf}:
     get:
-      summary: Get Analysis by ID Endpoint
+      summary: Get Analysis by CPF Endpoint
       tags:
         - credit analysis
       parameters:
-        - name: id
+        - name: cpf
           in: path
-          description: Analysis ID
+          description: Client CPF
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Successful response
