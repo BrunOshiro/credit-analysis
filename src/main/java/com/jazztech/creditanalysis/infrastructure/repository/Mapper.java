@@ -6,7 +6,6 @@ import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @org.mapstruct.Mapper(componentModel = "spring")
 public interface Mapper {
@@ -15,8 +14,6 @@ public interface Mapper {
     Domain dtoToDomain(@Valid RequestDto requestDto);
 
     ResponseDto entityToDto(@Valid Entity entity);
-
-    ResponseDto optionalEntityToDto(@Valid Optional<Entity> optionalEntity);
 
     List<ResponseDto> listEntityToListDto(List<Entity> entities);
 }
