@@ -3,7 +3,7 @@ package com.jazztech.creditanalysis.infrastructure.repository.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Immutable;
@@ -24,6 +24,9 @@ public class Entity {
     Double monthlyIncome;
     @Column(name = "requested_amount")
     Double requestedAmount;
+
+    @Column(name = "approved")
+    Boolean approved;
     @Column(name = "approved_limit")
     Double approvedLimit;
     @Column(name = "annual_interest")
@@ -32,7 +35,7 @@ public class Entity {
     Double withdraw;
     @CreationTimestamp
     @Column(name = "creation_date")
-    LocalDate creationDate;
+    LocalDateTime creationDate;
 
     private Entity() {
     }
@@ -44,10 +47,11 @@ public class Entity {
             String clientName,
             Double monthlyIncome,
             Double requestedAmount,
+            Boolean approved,
             Double approvedLimit,
             Double annualInterest,
             Double withdraw,
-            LocalDate creationDate
+            LocalDateTime creationDate
     ) {
         this.id = UUID.randomUUID();
         this.clientId = clientId;
@@ -55,10 +59,11 @@ public class Entity {
         this.clientName = clientName;
         this.monthlyIncome = monthlyIncome;
         this.requestedAmount = requestedAmount;
+        this.approved = approved;
         this.approvedLimit = approvedLimit;
         this.annualInterest = annualInterest;
         this.withdraw = withdraw;
-        this.creationDate = creationDate;
+        this.creationDate = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -69,20 +74,8 @@ public class Entity {
         return clientId;
     }
 
-    public String getClientCpf() {
-        return clientCpf;
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
-    public Double getMonthlyIncome() {
-        return monthlyIncome;
-    }
-
-    public Double getRequestedAmount() {
-        return requestedAmount;
+    public Boolean getApproved() {
+        return approved;
     }
 
     public Double getApprovedLimit() {
@@ -97,7 +90,7 @@ public class Entity {
         return withdraw;
     }
 
-    public LocalDate getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 }

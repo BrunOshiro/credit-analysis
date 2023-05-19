@@ -6,6 +6,7 @@ import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.mapstruct.Mapping;
 
 @org.mapstruct.Mapper(componentModel = "spring")
 public interface Mapper {
@@ -13,6 +14,7 @@ public interface Mapper {
 
     Domain dtoToDomain(@Valid RequestDto requestDto);
 
+    @Mapping(source = "creationDate", target = "date")
     ResponseDto entityToDto(@Valid Entity entity);
 
     List<ResponseDto> listEntityToListDto(List<Entity> entities);

@@ -13,6 +13,7 @@ public record Domain(
         String clientName,
         Double monthlyIncome,
         Double requestedAmount,
+        Boolean approved,
         Double approvedLimit,
         Double annualInterest,
         Double withdraw
@@ -24,6 +25,7 @@ public record Domain(
             String clientName,
             Double monthlyIncome,
             Double requestedAmount,
+            Boolean approved,
             Double approvedLimit,
             Double annualInterest,
             Double withdraw
@@ -33,6 +35,7 @@ public record Domain(
         this.clientName = clientName;
         this.monthlyIncome = monthlyIncome;
         this.requestedAmount = requestedAmount;
+        this.approved = approved;
         this.approvedLimit = approvedLimit;
         this.annualInterest = annualInterest;
         this.withdraw = withdraw;
@@ -47,6 +50,7 @@ public record Domain(
                 .clientName(clientApiDto.nome())
                 .monthlyIncome(this.monthlyIncome())
                 .requestedAmount(this.requestedAmount())
+                .approved(this.approved())
                 .approvedLimit(this.approvedLimit())
                 .annualInterest(this.annualInterest())
                 .withdraw(this.withdraw())

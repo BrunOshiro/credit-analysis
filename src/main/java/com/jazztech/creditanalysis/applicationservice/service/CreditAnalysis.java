@@ -67,6 +67,9 @@ public class CreditAnalysis {
         // Check if monthlyIncome is greater than maximum allowed
         monthlyIncome = (monthlyIncome > MAX_MONTHLY_INCOME) ? MAX_MONTHLY_INCOME : monthlyIncome;
 
+        // Approval
+        final boolean approved = requestedAmount <= monthlyIncome;
+
         // Calculate the approved limit
         double approvedLimit = 0.00;
         if (requestedAmount < monthlyIncome) {
@@ -78,11 +81,22 @@ public class CreditAnalysis {
         final Double withdraw = approvedLimit * WITHDRAW_LIMIT;
 
         // Setting values to domain
-        updatedClientDomain = updatedClientDomain.toBuilder()
-                .approvedLimit(approvedLimit)
-                .annualInterest(ANNUAL_INTEREST)
-                .withdraw(withdraw)
-                .build();
+        if (approved) {
+            updatedClientDomain = updatedClientDomain.toBuilder()
+                    .approved(true)
+                    .approvedLimit(approvedLimit)
+                    .annualInterest(ANNUAL_INTEREST)
+                    .withdraw(withdraw)
+                    .build();
+        } else {
+            updatedClientDomain = updatedClientDomain.toBuilder()
+                    .approved(false)
+                    .approvedLimit(null)
+                    .annualInterest(null)
+                    .withdraw(null)
+                    .build();
+        }
+
         return updatedClientDomain;
     }
 }
