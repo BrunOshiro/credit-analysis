@@ -21,6 +21,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreditAnalysis {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreditAnalysis.class);
+    private static final Double MAX_MONTHLY_INCOME = 50000.00;
+    private static final Double MAX_APPROVAL_PERCENTAGE = 0.30;
+    private static final Double MIN_APPROVAL_PERCENTAGE = 0.15;
+    private static final double WITHDRAW_LIMIT = 0.1;
+    private static final Double ANNUAL_INTEREST = 0.15;
+
     private final Repository repository;
     private final ClientApi clientApi;
     private final Mapper mapper;
@@ -30,13 +36,13 @@ public class CreditAnalysis {
         // Client consult
         final Domain domain = mapper.dtoToDomain(requestDto);
         final ClientApiDto clientApiDto = getClientFromClientApi(domain.clientId());
-        final Domain updatedClientDomain = domain.updateDomain(clientApiDto);
+        final Domain newClientDomain = domain.updateDomain(clientApiDto);
 
         //Credit Analysis
-        final Domain updatedCreditAnalysisDomain = getCreditAnalysis(updatedClientDomain);
+        final Domain newCreditAnalysisDomain = getCreditAnalysis(newClientDomain);
 
         //Save into database
-        final Entity entity = mapper.domainToEntity(updatedCreditAnalysisDomain);
+        final Entity entity = mapper.domainToEntity(newCreditAnalysisDomain);
         final Entity savedAnalysis = repository.save(entity);
 
         LOGGER.info("Credit Analysis was performed successfully");
@@ -57,33 +63,24 @@ public class CreditAnalysis {
     private Domain getCreditAnalysis(Domain updatedClientDomain) {
         final Double requestedAmount = updatedClientDomain.requestedAmount();
         Double monthlyIncome = updatedClientDomain.monthlyIncome();
-        final Double maxMonthlyIncome = 50000.00;
-        final Double maxApprovalPercentage = .30;
-        final Double minApprovalPercentage = .15;
-        final double withdrawLimit = .1;
-        final Double annualInterest = .15;
 
         // Check if monthlyIncome is greater than maximum allowed
-        monthlyIncome = (monthlyIncome > maxMonthlyIncome) ? maxMonthlyIncome : monthlyIncome;
+        monthlyIncome = (monthlyIncome > MAX_MONTHLY_INCOME) ? MAX_MONTHLY_INCOME : monthlyIncome;
 
         // Calculate the approved limit
-        final double approvedLimit;
+        double approvedLimit = 0.00;
         if (requestedAmount < monthlyIncome) {
-            if (requestedAmount > monthlyIncome * .5) {
-                approvedLimit = monthlyIncome * minApprovalPercentage;
-            } else {
-                approvedLimit = monthlyIncome * maxApprovalPercentage;
-            }
-        } else {
-            approvedLimit = 0.00;
+            approvedLimit = (requestedAmount > monthlyIncome * 0.5)
+                    ? monthlyIncome * MIN_APPROVAL_PERCENTAGE
+                    : monthlyIncome * MAX_APPROVAL_PERCENTAGE;
         }
 
-        final Double withdraw = approvedLimit * withdrawLimit;
+        final Double withdraw = approvedLimit * WITHDRAW_LIMIT;
 
         // Setting values to domain
         updatedClientDomain = updatedClientDomain.toBuilder()
                 .approvedLimit(approvedLimit)
-                .annualInterest(annualInterest)
+                .annualInterest(ANNUAL_INTEREST)
                 .withdraw(withdraw)
                 .build();
         return updatedClientDomain;
