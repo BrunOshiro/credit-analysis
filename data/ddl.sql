@@ -1,14 +1,13 @@
 CREATE TABLE IF NOT EXISTS credit_analysis (
-    id uuid NOT NULL,
+    id uuid PRIMARY KEY,
     client_id uuid,
     client_cpf VARCHAR(11),
     client_name VARCHAR(100),
-    monthly_income DOUBLE PRECISION,
-    requested_amount DOUBLE PRECISION,
+    monthly_income NUMERIC(10,2),
+    requested_amount NUMERIC(10,2),
     approved BOOLEAN,
-    approved_limit DOUBLE PRECISION,
-    annual_interest DOUBLE PRECISION,
-    withdraw DOUBLE PRECISION,
-    creation_date DATE,
-    PRIMARY KEY (id)
+    approved_limit NUMERIC(10,2),
+    annual_interest NUMERIC(10,2),
+    withdraw NUMERIC(10,2),
+    creation_date TIMESTAMP
 );

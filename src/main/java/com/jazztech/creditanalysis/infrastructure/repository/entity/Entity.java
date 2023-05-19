@@ -3,6 +3,8 @@ package com.jazztech.creditanalysis.infrastructure.repository.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,7 @@ import org.hibernate.annotations.Immutable;
 @jakarta.persistence.Entity
 @Immutable
 public class Entity {
+    private static final Integer ROUND = 2;
     @Id
     UUID id;
     @Column(name = "client_id")
@@ -21,18 +24,17 @@ public class Entity {
     @Column(name = "client_name")
     String clientName;
     @Column(name = "monthly_income")
-    Double monthlyIncome;
+    BigDecimal monthlyIncome;
     @Column(name = "requested_amount")
-    Double requestedAmount;
-
+    BigDecimal requestedAmount;
     @Column(name = "approved")
     Boolean approved;
     @Column(name = "approved_limit")
-    Double approvedLimit;
+    BigDecimal approvedLimit;
     @Column(name = "annual_interest")
-    Double annualInterest;
+    BigDecimal annualInterest;
     @Column(name = "withdraw")
-    Double withdraw;
+    BigDecimal withdraw;
     @CreationTimestamp
     @Column(name = "creation_date")
     LocalDateTime creationDate;
@@ -40,29 +42,26 @@ public class Entity {
     private Entity() {
     }
 
-    public Entity(
-            UUID id,
-            UUID clientId,
-            String clientCpf,
-            String clientName,
-            Double monthlyIncome,
-            Double requestedAmount,
-            Boolean approved,
-            Double approvedLimit,
-            Double annualInterest,
-            Double withdraw,
-            LocalDateTime creationDate
+    public Entity(UUID clientId,
+                  String clientCpf,
+                  String clientName,
+                  BigDecimal monthlyIncome,
+                  BigDecimal requestedAmount,
+                  Boolean approved,
+                  BigDecimal approvedLimit,
+                  BigDecimal annualInterest,
+                  BigDecimal withdraw
     ) {
         this.id = UUID.randomUUID();
         this.clientId = clientId;
         this.clientCpf = clientCpf;
         this.clientName = clientName;
-        this.monthlyIncome = monthlyIncome;
-        this.requestedAmount = requestedAmount;
+        this.monthlyIncome = monthlyIncome.setScale(ROUND, RoundingMode.HALF_UP);
+        this.requestedAmount = requestedAmount.setScale(ROUND, RoundingMode.HALF_UP);
         this.approved = approved;
-        this.approvedLimit = approvedLimit;
-        this.annualInterest = annualInterest;
-        this.withdraw = withdraw;
+        this.approvedLimit = approvedLimit.setScale(ROUND, RoundingMode.HALF_UP);
+        this.annualInterest = annualInterest.setScale(ROUND, RoundingMode.HALF_UP);
+        this.withdraw = withdraw.setScale(ROUND, RoundingMode.HALF_UP);
         this.creationDate = LocalDateTime.now();
     }
 
@@ -78,15 +77,15 @@ public class Entity {
         return approved;
     }
 
-    public Double getApprovedLimit() {
+    public BigDecimal getApprovedLimit() {
         return approvedLimit;
     }
 
-    public Double getAnnualInterest() {
+    public BigDecimal getAnnualInterest() {
         return annualInterest;
     }
 
-    public Double getWithdraw() {
+    public BigDecimal getWithdraw() {
         return withdraw;
     }
 

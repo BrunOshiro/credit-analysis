@@ -24,7 +24,7 @@ public class CreditAnalysis {
     private static final Double MAX_MONTHLY_INCOME = 50000.00;
     private static final Double MAX_APPROVAL_PERCENTAGE = 0.30;
     private static final Double MIN_APPROVAL_PERCENTAGE = 0.15;
-    private static final double WITHDRAW_LIMIT = 0.1;
+    private static final Double WITHDRAW_LIMIT = 0.10;
     private static final Double ANNUAL_INTEREST = 0.15;
 
     private final Repository repository;
@@ -91,9 +91,9 @@ public class CreditAnalysis {
         } else {
             updatedClientDomain = updatedClientDomain.toBuilder()
                     .approved(false)
-                    .approvedLimit(null)
-                    .annualInterest(null)
-                    .withdraw(null)
+                    .approvedLimit(0.00)
+                    .annualInterest(0.00)
+                    .withdraw(0.00)
                     .build();
         }
 
