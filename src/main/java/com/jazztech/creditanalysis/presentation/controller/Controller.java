@@ -7,6 +7,7 @@ import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +38,20 @@ public class Controller {
         return creditAnalysis.create(requestDto);
     }
 
-    //Search by CPF
+    //Search by CPF or ClientId
     @GetMapping("/")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ResponseDto> getCreditAnalysisByCpf(@RequestParam(value = "cpf", required = true) @Valid String cpf) {
-        LOGGER.info("Search Credit Analysis by CPF: " + cpf);
-        return search.byCpf(cpf);
+    public List<ResponseDto> getCreditAnalysisByCpfOrClientId(
+            @RequestParam(value = "clientId", required = false) UUID clientId,
+            @RequestParam(value = "cpf") @Valid String cpf
+    ) {
+        if (clientId != null) {
+            LOGGER.info("Search Credit Analysis by ClientId: " + clientId + "performed successfully");
+            return search.byClientId(clientId);
+        } else {
+            LOGGER.info("Search Credit Analysis by CPF: " + cpf + "performed successfully");
+            return search.byCpf(cpf);
+        }
     }
 
     //Search all Contracts

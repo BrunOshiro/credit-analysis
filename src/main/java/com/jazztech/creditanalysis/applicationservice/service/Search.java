@@ -7,6 +7,7 @@ import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,6 +26,13 @@ public class Search {
         final List<Entity> entities = StringUtils.isBlank(clientCpf)
                 ? repository.findAll() : repository.findByClientCpf(clientCpf);
         LOGGER.info("Credit Analysis Listed by CPF Successfully");
+        return mapper.listEntityToListDto(entities);
+    }
+
+    @Transactional
+    public List<ResponseDto> byClientId(UUID clientId) {
+        final List<Entity> entities = repository.findByClientId(clientId);
+        LOGGER.info("Credit Analysis listed by ClientId successfully");
         return mapper.listEntityToListDto(entities);
     }
 

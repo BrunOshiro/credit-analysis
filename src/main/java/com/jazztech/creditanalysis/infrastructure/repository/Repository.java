@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @org.springframework.stereotype.Repository
 public interface Repository extends JpaRepository<Entity, UUID> {
     List<Entity> findByClientCpf(String clientCpf);
+
+    List<Entity> findByClientId(UUID clientId);
 }
