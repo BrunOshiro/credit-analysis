@@ -60,7 +60,7 @@ public class CreditAnalysis {
     }
 
     // Credit Analysis
-    private Domain getCreditAnalysis(Domain updatedClientDomain) {
+    public Domain getCreditAnalysis(Domain updatedClientDomain) {
         final Double requestedAmount = updatedClientDomain.requestedAmount();
         Double monthlyIncome = updatedClientDomain.monthlyIncome();
 
