@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.Builder;
 
+@Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ClientApiDto(
         UUID id,
@@ -15,6 +17,7 @@ public record ClientApiDto(
         LocalDateTime creationDate,
         LocalDateTime updateDate
 ) {
+    @Builder(toBuilder = true)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public record ClientApiAddressDto(
             UUID id,

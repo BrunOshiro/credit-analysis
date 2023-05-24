@@ -7,12 +7,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Immutable;
 
 @Table(name = "credit_analysis")
 @jakarta.persistence.Entity
 @Immutable
+@Builder
 public class Entity {
     private static final Integer ROUND = 2;
     @Id
@@ -42,7 +44,8 @@ public class Entity {
     private Entity() {
     }
 
-    public Entity(UUID clientId,
+    public Entity(UUID id,
+                  UUID clientId,
                   String clientCpf,
                   String clientName,
                   BigDecimal monthlyIncome,
@@ -50,9 +53,10 @@ public class Entity {
                   Boolean approved,
                   BigDecimal approvedLimit,
                   BigDecimal annualInterest,
-                  BigDecimal withdraw
+                  BigDecimal withdraw,
+                  LocalDateTime creationDate
     ) {
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.clientId = clientId;
         this.clientCpf = clientCpf;
         this.clientName = clientName;
@@ -62,8 +66,9 @@ public class Entity {
         this.approvedLimit = approvedLimit.setScale(ROUND, RoundingMode.HALF_UP);
         this.annualInterest = annualInterest.setScale(ROUND, RoundingMode.HALF_UP);
         this.withdraw = withdraw.setScale(ROUND, RoundingMode.HALF_UP);
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = creationDate;
     }
+
 
     public UUID getId() {
         return id;
