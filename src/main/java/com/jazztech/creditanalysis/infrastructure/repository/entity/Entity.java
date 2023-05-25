@@ -42,10 +42,6 @@ public class Entity {
     public Entity() {
     }
 
-    public Entity(UUID clientId, String clientCpf, String clientName, BigDecimal monthlyIncome, BigDecimal requestedAmount, Boolean approved,
-                  BigDecimal approvedLimit, BigDecimal annualInterest, BigDecimal withdraw) {
-    }
-
     public Entity(UUID id,
                   UUID clientId,
                   String clientCpf,
