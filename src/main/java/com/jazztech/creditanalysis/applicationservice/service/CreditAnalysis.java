@@ -72,7 +72,7 @@ public class CreditAnalysis {
 
         // Calculate the approved limit
         double approvedLimit = 0.00;
-        if (requestedAmount < monthlyIncome) {
+        if (requestedAmount <= monthlyIncome) {
             approvedLimit = (requestedAmount > monthlyIncome * 0.5)
                     ? monthlyIncome * MIN_APPROVAL_PERCENTAGE
                     : monthlyIncome * MAX_APPROVAL_PERCENTAGE;

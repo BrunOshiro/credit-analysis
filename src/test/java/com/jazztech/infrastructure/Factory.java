@@ -10,16 +10,30 @@ import java.util.UUID;
 
 public class Factory {
     public static RequestDto requestDtoFactory() {
-        return RequestDto.builder().clientId(UUID.fromString("dd1efc87-a9c1-4f08-8fb7-1cd71d92dd6d")).monthlyIncome(BigDecimal.valueOf(10000.00))
-                .requestedAmount(BigDecimal.valueOf(5000.00)).build();
+        return RequestDto.builder()
+                .clientId(UUID.fromString("dd1efc87-a9c1-4f08-8fb7-1cd71d92dd6d"))
+                .monthlyIncome(BigDecimal.valueOf(10000.00))
+                .requestedAmount(BigDecimal.valueOf(5000.00))
+                .build();
     }
 
     public static ClientApiDto clientApiDtoFactory() {
-        return ClientApiDto.builder().id(UUID.fromString("dd1efc87-a9c1-4f08-8fb7-1cd71d92dd6d")).nome("Lauren Ipson").cpf("18784272023")
-                .dataNascimento(LocalDate.parse("1993-01-01")).clientApiAddressDto(
-                        ClientApiDto.ClientApiAddressDto.builder().id(UUID.fromString("3b92e416-898c-4379-9b78-14ff661c755a")).cep("84072-140")
-                                .enderecoNumero(51).enderecoComplemento("there is a stone").enderecoRua("Rua Lydia Henneberg Fanchin")
-                                .enderecoBairro("Boa Vista").enderecoCidade("Ponta Grossa").enderecoUf("PR").build()).build();
+        return ClientApiDto.builder()
+                .id(UUID.fromString("dd1efc87-a9c1-4f08-8fb7-1cd71d92dd6d"))
+                .nome("Lauren Ipson")
+                .cpf("18784272023")
+                .dataNascimento(LocalDate.parse("1993-01-01"))
+                .clientApiAddressDto(ClientApiDto.ClientApiAddressDto.builder()
+                        .id(UUID.fromString("3b92e416-898c-4379-9b78-14ff661c755a"))
+                        .cep("84072-140")
+                        .enderecoNumero(51)
+                        .enderecoComplemento("there is a stone")
+                        .enderecoRua("Rua Lydia Henneberg Fanchin")
+                        .enderecoBairro("Boa Vista")
+                        .enderecoCidade("Ponta Grossa")
+                        .enderecoUf("PR")
+                        .build())
+                .build();
     }
 
     public static Entity entityFactory() {
