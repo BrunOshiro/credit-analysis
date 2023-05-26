@@ -35,7 +35,7 @@ public class Controller {
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseDto createCreditAnalysis(@RequestBody @Valid RequestDto requestDto) throws ClientNotFound {
         LOGGER.info("Credit Analysis request: " + requestDto.toString());
-        return creditAnalysis.create(requestDto);
+        return creditAnalysis.createCreditAnalysis(requestDto);
     }
 
     //Search by CPF or ClientId

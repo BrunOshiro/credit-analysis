@@ -1,8 +1,8 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
-    name: client-app
+    name: credit-analysis-app
 
   cloud:
     openfeign:
@@ -35,7 +35,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
 
 url:
-  clientApi.host: http://localhost:8081/api/v1.0/clients
+  clientApi.host: http://localhost:8080/api/v1.0/clients
 
 #  spring.cloud.openfeign.client.config.default.connectTimeout=5000
 #  spring.cloud.openfeign.client.config.default.readTimeout=5000

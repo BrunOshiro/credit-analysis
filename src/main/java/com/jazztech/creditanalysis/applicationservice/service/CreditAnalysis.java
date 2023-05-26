@@ -32,14 +32,14 @@ public class CreditAnalysis {
     private final Mapper mapper;
 
     @Transactional
-    public ResponseDto create(@Valid RequestDto requestDto) throws ClientNotFound {
+    public ResponseDto createCreditAnalysis(@Valid RequestDto requestDto) throws ClientNotFound {
         // Client consult
         final Domain domain = mapper.dtoToDomain(requestDto);
         final ClientApiDto clientApiDto = getClientFromClientApi(domain.clientId());
         final Domain newClientDomain = domain.updateDomain(clientApiDto);
 
         //Credit Analysis
-        final Domain newCreditAnalysisDomain = getCreditAnalysis(newClientDomain);
+        final Domain newCreditAnalysisDomain = performCreditAnalysis(newClientDomain);
 
         //Save into database
         final Entity entity = mapper.domainToEntity(newCreditAnalysisDomain);
@@ -60,7 +60,7 @@ public class CreditAnalysis {
     }
 
     // Credit Analysis
-    public Domain getCreditAnalysis(Domain updatedClientDomain) {
+    public Domain performCreditAnalysis(Domain updatedClientDomain) {
         final Double requestedAmount = updatedClientDomain.requestedAmount();
         Double monthlyIncome = updatedClientDomain.monthlyIncome();
 

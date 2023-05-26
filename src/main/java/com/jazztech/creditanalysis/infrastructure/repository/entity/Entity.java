@@ -8,11 +8,9 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Immutable;
 
 @Table(name = "credit_analysis")
 @jakarta.persistence.Entity
-@Immutable
 public class Entity {
     private static final Integer ROUND = 2;
     @Id
@@ -42,8 +40,7 @@ public class Entity {
     public Entity() {
     }
 
-    public Entity(UUID id,
-                  UUID clientId,
+    public Entity(UUID clientId,
                   String clientCpf,
                   String clientName,
                   BigDecimal monthlyIncome,
@@ -51,10 +48,8 @@ public class Entity {
                   Boolean approved,
                   BigDecimal approvedLimit,
                   BigDecimal annualInterest,
-                  BigDecimal withdraw,
-                  LocalDateTime creationDate
+                  BigDecimal withdraw
     ) {
-        this.id = id;
         this.clientId = clientId;
         this.clientCpf = clientCpf;
         this.clientName = clientName;
@@ -64,7 +59,7 @@ public class Entity {
         this.approvedLimit = approvedLimit.setScale(ROUND, RoundingMode.HALF_UP);
         this.annualInterest = annualInterest.setScale(ROUND, RoundingMode.HALF_UP);
         this.withdraw = withdraw.setScale(ROUND, RoundingMode.HALF_UP);
-        this.creationDate = creationDate;
+        this.creationDate = LocalDateTime.now();
     }
 
 

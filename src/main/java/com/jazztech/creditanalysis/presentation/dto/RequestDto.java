@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.Builder;
 
-@Builder
+@Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RequestDto(
         UUID clientId,
