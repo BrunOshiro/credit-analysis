@@ -50,6 +50,7 @@ public class Entity {
                   BigDecimal annualInterest,
                   BigDecimal withdraw
     ) {
+        this.id = UUID.randomUUID();
         this.clientId = clientId;
         this.clientCpf = clientCpf;
         this.clientName = clientName;
