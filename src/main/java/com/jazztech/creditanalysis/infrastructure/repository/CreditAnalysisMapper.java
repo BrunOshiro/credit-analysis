@@ -5,6 +5,7 @@ import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalys
 import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.mapstruct.BeforeMapping;
@@ -15,8 +16,9 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface CreditAnalysisMapper {
     @BeforeMapping
-    default void generateId(@MappingTarget CreditAnalysisEntity creditAnalysisEntity) {
+    default void generateIdAndDate(@MappingTarget CreditAnalysisEntity creditAnalysisEntity) {
         creditAnalysisEntity.setId(UUID.randomUUID());
+        creditAnalysisEntity.setCreationDate(LocalDateTime.now());
     }
 
     CreditAnalysisEntity domainToEntity(@Valid CreditAnalysisDomain creditAnalysisDomain);

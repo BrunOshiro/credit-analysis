@@ -69,36 +69,56 @@ public class CreditAnalysisEntity {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public UUID getClientId() {
         return clientId;
+    }
+
+    public void setClientId(UUID clientId) {
+        this.clientId = clientId;
     }
 
     public Boolean getApproved() {
         return approved;
     }
 
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
     public BigDecimal getApprovedLimit() {
         return approvedLimit;
+    }
+
+    public void setApprovedLimit(BigDecimal approvedLimit) {
+        this.approvedLimit = approvedLimit;
     }
 
     public BigDecimal getAnnualInterest() {
         return annualInterest;
     }
 
+    public void setAnnualInterest(BigDecimal annualInterest) {
+        this.annualInterest = annualInterest;
+    }
+
     public BigDecimal getWithdraw() {
         return withdraw;
+    }
+
+    public void setWithdraw(BigDecimal withdraw) {
+        this.withdraw = withdraw;
     }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setClientId(UUID clientId) {
-        this.clientId = clientId;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public void setClientCpf(String clientCpf) {
@@ -115,21 +135,5 @@ public class CreditAnalysisEntity {
 
     public void setRequestedAmount(BigDecimal requestedAmount) {
         this.requestedAmount = requestedAmount;
-    }
-
-    public void setApproved(Boolean approved) {
-        this.approved = approved;
-    }
-
-    public void setApprovedLimit(BigDecimal approvedLimit) {
-        this.approvedLimit = approvedLimit;
-    }
-
-    public void setAnnualInterest(BigDecimal annualInterest) {
-        this.annualInterest = annualInterest;
-    }
-
-    public void setWithdraw(BigDecimal withdraw) {
-        this.withdraw = withdraw;
     }
 }
