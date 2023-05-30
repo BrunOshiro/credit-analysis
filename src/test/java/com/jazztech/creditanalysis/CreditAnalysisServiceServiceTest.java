@@ -2,11 +2,9 @@ package com.jazztech.creditanalysis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.jazztech.creditanalysis.applicationservice.domain.entity.Domain;
-import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysis;
-import com.jazztech.creditanalysis.infrastructure.clientsapi.ClientApi;
-import com.jazztech.creditanalysis.infrastructure.repository.MapperImpl;
-import com.jazztech.creditanalysis.infrastructure.repository.Repository;
+import com.jazztech.creditanalysis.applicationservice.domain.entity.CreditAnalysisDomain;
+import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysisService;
+import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMapperImpl;
 import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.infrastructure.Factory;
 import java.math.BigDecimal;
@@ -15,17 +13,16 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class CreditAnalysisServiceTest {
+public class CreditAnalysisServiceServiceTest {
     @InjectMocks
-    CreditAnalysis creditAnalysis;
+    CreditAnalysisService creditAnalysisService;
     @Spy
-    private MapperImpl mapperImpl;
+    private CreditAnalysisMapperImpl mapperImpl;
 
     @Test
     public void should_get_credit_analysis_approved() {
@@ -34,10 +31,10 @@ public class CreditAnalysisServiceTest {
                 .monthlyIncome(BigDecimal.valueOf(10000.00))
                 .requestedAmount(BigDecimal.valueOf(5000.00))
                 .build();
-        Domain domain = mapperImpl.dtoToDomain(requestDto);
+        CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        Domain result = creditAnalysis.performCreditAnalysis(domain);
+        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
 
         //Assert the expected values
         assertEquals(true, result.approved());
@@ -53,10 +50,10 @@ public class CreditAnalysisServiceTest {
                 .monthlyIncome(BigDecimal.valueOf(5000.00))
                 .requestedAmount(BigDecimal.valueOf(7000.00))
                 .build();
-        Domain domain = mapperImpl.dtoToDomain(requestDto);
+        CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        Domain result = creditAnalysis.performCreditAnalysis(domain);
+        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(false, result.approved());
@@ -73,10 +70,10 @@ public class CreditAnalysisServiceTest {
                 .monthlyIncome(BigDecimal.valueOf(10000.00))
                 .requestedAmount(BigDecimal.valueOf(5001.00))
                 .build();
-        Domain domain = mapperImpl.dtoToDomain(requestDto);
+        CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        Domain result = creditAnalysis.performCreditAnalysis(domain);
+        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(true, result.approved());
@@ -92,10 +89,10 @@ public class CreditAnalysisServiceTest {
                 .monthlyIncome(BigDecimal.valueOf(75000.00))
                 .requestedAmount(BigDecimal.valueOf(20000.00))
                 .build();
-        Domain domain = mapperImpl.dtoToDomain(requestDto);
+        CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        Domain result = creditAnalysis.performCreditAnalysis(domain);
+        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(true, result.approved());
@@ -112,10 +109,10 @@ public class CreditAnalysisServiceTest {
                 .monthlyIncome(BigDecimal.valueOf(100000.00))
                 .requestedAmount(BigDecimal.valueOf(50000.00))
                 .build();
-        Domain domain = mapperImpl.dtoToDomain(requestDto);
+        CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        Domain result = creditAnalysis.performCreditAnalysis(domain);
+        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(true, result.approved());
@@ -133,10 +130,10 @@ public class CreditAnalysisServiceTest {
                 .monthlyIncome(BigDecimal.valueOf(100000.00))
                 .requestedAmount(BigDecimal.valueOf(51000.00))
                 .build();
-        Domain domain = mapperImpl.dtoToDomain(requestDto);
+        CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        Domain result = creditAnalysis.performCreditAnalysis(domain);
+        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(false, result.approved());

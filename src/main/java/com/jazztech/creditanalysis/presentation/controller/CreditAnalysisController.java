@@ -1,7 +1,7 @@
 package com.jazztech.creditanalysis.presentation.controller;
 
-import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysis;
-import com.jazztech.creditanalysis.applicationservice.service.Search;
+import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysisSearch;
+import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysisService;
 import com.jazztech.creditanalysis.infrastructure.exceptions.ClientNotFound;
 import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
@@ -25,17 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v.1.0.0/credit/analysis")
 @RequiredArgsConstructor
 @Validated
-public class Controller {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
-    private final CreditAnalysis creditAnalysis;
-    private final Search search;
+public class CreditAnalysisController {
+    public static final Logger LOGGER = LoggerFactory.getLogger(CreditAnalysisController.class);
+    private final CreditAnalysisService creditAnalysisService;
+    private final CreditAnalysisSearch creditAnalysisSearch;
 
     //Credit Analysis Creation
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseDto createCreditAnalysis(@RequestBody @Valid RequestDto requestDto) throws ClientNotFound {
         LOGGER.info("Credit Analysis request: " + requestDto.toString());
-        return creditAnalysis.createCreditAnalysis(requestDto);
+        return creditAnalysisService.createCreditAnalysis(requestDto);
     }
 
     //Search by CPF or ClientId
@@ -47,10 +47,10 @@ public class Controller {
     ) {
         if (clientId != null) {
             LOGGER.info("Search Credit Analysis by ClientId: " + clientId + "performed successfully");
-            return search.byClientId(clientId);
+            return creditAnalysisSearch.byClientId(clientId);
         } else {
             LOGGER.info("Search Credit Analysis by CPF: " + cpf + "performed successfully");
-            return search.byCpf(cpf);
+            return creditAnalysisSearch.byCpf(cpf);
         }
     }
 
@@ -59,6 +59,6 @@ public class Controller {
     @ResponseStatus(value = HttpStatus.OK)
     public List<ResponseDto> getAllCreditAnalysis() {
         LOGGER.info("Search All Credit Analysis");
-        return search.all();
+        return creditAnalysisSearch.all();
     }
 }

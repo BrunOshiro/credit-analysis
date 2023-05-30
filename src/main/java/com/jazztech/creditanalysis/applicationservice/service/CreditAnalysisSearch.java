@@ -1,8 +1,8 @@
 package com.jazztech.creditanalysis.applicationservice.service;
 
-import com.jazztech.creditanalysis.infrastructure.repository.Mapper;
-import com.jazztech.creditanalysis.infrastructure.repository.Repository;
-import com.jazztech.creditanalysis.infrastructure.repository.entity.Entity;
+import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMapper;
+import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisRepository;
+import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalysisEntity;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -16,29 +16,29 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class Search {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Search.class);
-    private final Repository repository;
-    private final Mapper mapper;
+public class CreditAnalysisSearch {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreditAnalysisSearch.class);
+    private final CreditAnalysisRepository creditAnalysisRepository;
+    private final CreditAnalysisMapper mapper;
 
     @Transactional
     public List<ResponseDto> byCpf(@Valid String clientCpf) {
-        final List<Entity> entities = StringUtils.isBlank(clientCpf)
-                ? repository.findAll() : repository.findByClientCpf(clientCpf);
+        final List<CreditAnalysisEntity> entities = StringUtils.isBlank(clientCpf)
+                ? creditAnalysisRepository.findAll() : creditAnalysisRepository.findByClientCpf(clientCpf);
         LOGGER.info("Credit Analysis Listed by CPF Successfully");
         return mapper.listEntityToListDto(entities);
     }
 
     @Transactional
     public List<ResponseDto> byClientId(UUID clientId) {
-        final List<Entity> entities = repository.findByClientId(clientId);
+        final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findByClientId(clientId);
         LOGGER.info("Credit Analysis listed by ClientId successfully");
         return mapper.listEntityToListDto(entities);
     }
 
     @Transactional
     public List<ResponseDto> all() {
-        final List<Entity> entities = repository.findAll();
+        final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findAll();
         LOGGER.info("Credit Analysis listed Successfully");
         return mapper.listEntityToListDto(entities);
     }

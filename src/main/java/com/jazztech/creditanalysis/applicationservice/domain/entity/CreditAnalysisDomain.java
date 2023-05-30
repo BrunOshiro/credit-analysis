@@ -6,7 +6,7 @@ import java.util.UUID;
 import lombok.Builder;
 import org.hibernate.validator.constraints.br.CPF;
 
-public record Domain(
+public record CreditAnalysisDomain(
         UUID clientId,
         @CPF
         String clientCpf,
@@ -19,7 +19,7 @@ public record Domain(
         Double withdraw
 ) {
     @Builder(toBuilder = true)
-    public Domain(
+    public CreditAnalysisDomain(
             UUID clientId,
             String clientCpf,
             String clientName,
@@ -43,7 +43,7 @@ public record Domain(
     }
 
     //Data update after ClientApi search
-    public Domain updateDomain(ClientApiDto clientApiDto) {
+    public CreditAnalysisDomain updateDomain(ClientApiDto clientApiDto) {
         return this.toBuilder()
                 .clientId(this.clientId())
                 .clientCpf(clientApiDto.cpf())

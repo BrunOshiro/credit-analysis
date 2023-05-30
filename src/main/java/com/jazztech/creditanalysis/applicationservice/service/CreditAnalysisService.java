@@ -1,12 +1,12 @@
 package com.jazztech.creditanalysis.applicationservice.service;
 
-import com.jazztech.creditanalysis.applicationservice.domain.entity.Domain;
+import com.jazztech.creditanalysis.applicationservice.domain.entity.CreditAnalysisDomain;
 import com.jazztech.creditanalysis.infrastructure.clientsapi.ClientApi;
 import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiDto;
 import com.jazztech.creditanalysis.infrastructure.exceptions.ClientNotFound;
-import com.jazztech.creditanalysis.infrastructure.repository.Mapper;
-import com.jazztech.creditanalysis.infrastructure.repository.Repository;
-import com.jazztech.creditanalysis.infrastructure.repository.entity.Entity;
+import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMapper;
+import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisRepository;
+import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalysisEntity;
 import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.transaction.Transactional;
@@ -19,31 +19,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreditAnalysis {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreditAnalysis.class);
+public class CreditAnalysisService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreditAnalysisService.class);
     private static final Double MAX_MONTHLY_INCOME = 50000.00;
     private static final Double MAX_APPROVAL_PERCENTAGE = 0.30;
     private static final Double MIN_APPROVAL_PERCENTAGE = 0.15;
     private static final Double WITHDRAW_LIMIT = 0.10;
     private static final Double ANNUAL_INTEREST = 0.15;
 
-    private final Repository repository;
+    private final CreditAnalysisRepository creditAnalysisRepository;
     private final ClientApi clientApi;
-    private final Mapper mapper;
+    private final CreditAnalysisMapper mapper;
 
     @Transactional
     public ResponseDto createCreditAnalysis(@Valid RequestDto requestDto) throws ClientNotFound {
         // Client consult
-        final Domain domain = mapper.dtoToDomain(requestDto);
-        final ClientApiDto clientApiDto = getClientFromClientApi(domain.clientId());
-        final Domain newClientDomain = domain.updateDomain(clientApiDto);
+        final CreditAnalysisDomain creditAnalysisDomain = mapper.dtoToDomain(requestDto);
+        final ClientApiDto clientApiDto = getClientFromClientApi(creditAnalysisDomain.clientId());
+        final CreditAnalysisDomain newClientCreditAnalysisDomain = creditAnalysisDomain.updateDomain(clientApiDto);
 
         //Credit Analysis
-        final Domain newCreditAnalysisDomain = performCreditAnalysis(newClientDomain);
+        final CreditAnalysisDomain newCreditAnalysisCreditAnalysisDomain = performCreditAnalysis(newClientCreditAnalysisDomain);
 
         //Save into database
-        final Entity entity = mapper.domainToEntity(newCreditAnalysisDomain);
-        final Entity savedAnalysis = repository.save(entity);
+        final CreditAnalysisEntity creditAnalysisEntity = mapper.domainToEntity(newCreditAnalysisCreditAnalysisDomain);
+        final CreditAnalysisEntity savedAnalysis = creditAnalysisRepository.save(creditAnalysisEntity);
 
         LOGGER.info("Credit Analysis was performed successfully");
         return mapper.entityToDto(savedAnalysis);
@@ -60,9 +60,9 @@ public class CreditAnalysis {
     }
 
     // Credit Analysis
-    public Domain performCreditAnalysis(Domain updatedClientDomain) {
-        final Double requestedAmount = updatedClientDomain.requestedAmount();
-        Double monthlyIncome = updatedClientDomain.monthlyIncome();
+    public CreditAnalysisDomain performCreditAnalysis(CreditAnalysisDomain updatedClientCreditAnalysisDomain) {
+        final Double requestedAmount = updatedClientCreditAnalysisDomain.requestedAmount();
+        Double monthlyIncome = updatedClientCreditAnalysisDomain.monthlyIncome();
 
         // Check if monthlyIncome is greater than maximum allowed
         monthlyIncome = (monthlyIncome > MAX_MONTHLY_INCOME) ? MAX_MONTHLY_INCOME : monthlyIncome;
@@ -82,14 +82,14 @@ public class CreditAnalysis {
 
         // Setting values to domain
         if (approved) {
-            updatedClientDomain = updatedClientDomain.toBuilder()
+            updatedClientCreditAnalysisDomain = updatedClientCreditAnalysisDomain.toBuilder()
                     .approved(true)
                     .approvedLimit(approvedLimit)
                     .annualInterest(ANNUAL_INTEREST)
                     .withdraw(withdraw)
                     .build();
         } else {
-            updatedClientDomain = updatedClientDomain.toBuilder()
+            updatedClientCreditAnalysisDomain = updatedClientCreditAnalysisDomain.toBuilder()
                     .approved(false)
                     .approvedLimit(0.00)
                     .annualInterest(0.00)
@@ -97,6 +97,6 @@ public class CreditAnalysis {
                     .build();
         }
 
-        return updatedClientDomain;
+        return updatedClientCreditAnalysisDomain;
     }
 }

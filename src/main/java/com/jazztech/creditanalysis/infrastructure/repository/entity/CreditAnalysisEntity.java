@@ -1,6 +1,7 @@
 package com.jazztech.creditanalysis.infrastructure.repository.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
@@ -10,8 +11,8 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Table(name = "credit_analysis")
-@jakarta.persistence.Entity
-public class Entity {
+@Entity
+public class CreditAnalysisEntity {
     private static final Integer ROUND = 2;
     @Id
     UUID id;
@@ -37,18 +38,18 @@ public class Entity {
     @Column(name = "creation_date")
     LocalDateTime creationDate;
 
-    public Entity() {
+    public CreditAnalysisEntity() {
     }
 
-    public Entity(UUID clientId,
-                  String clientCpf,
-                  String clientName,
-                  BigDecimal monthlyIncome,
-                  BigDecimal requestedAmount,
-                  Boolean approved,
-                  BigDecimal approvedLimit,
-                  BigDecimal annualInterest,
-                  BigDecimal withdraw
+    public CreditAnalysisEntity(UUID clientId,
+                                String clientCpf,
+                                String clientName,
+                                BigDecimal monthlyIncome,
+                                BigDecimal requestedAmount,
+                                Boolean approved,
+                                BigDecimal approvedLimit,
+                                BigDecimal annualInterest,
+                                BigDecimal withdraw
     ) {
         this.id = UUID.randomUUID();
         this.clientId = clientId;
@@ -90,5 +91,45 @@ public class Entity {
 
     public LocalDateTime getCreationDate() {
         return creationDate;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setClientId(UUID clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setClientCpf(String clientCpf) {
+        this.clientCpf = clientCpf;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public void setMonthlyIncome(BigDecimal monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
+    public void setRequestedAmount(BigDecimal requestedAmount) {
+        this.requestedAmount = requestedAmount;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public void setApprovedLimit(BigDecimal approvedLimit) {
+        this.approvedLimit = approvedLimit;
+    }
+
+    public void setAnnualInterest(BigDecimal annualInterest) {
+        this.annualInterest = annualInterest;
+    }
+
+    public void setWithdraw(BigDecimal withdraw) {
+        this.withdraw = withdraw;
     }
 }
