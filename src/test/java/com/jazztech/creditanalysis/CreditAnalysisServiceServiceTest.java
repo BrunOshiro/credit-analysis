@@ -34,7 +34,7 @@ public class CreditAnalysisServiceServiceTest {
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
+        CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         //Assert the expected values
         assertEquals(true, result.approved());
@@ -53,7 +53,7 @@ public class CreditAnalysisServiceServiceTest {
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
+        CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(false, result.approved());
@@ -73,7 +73,7 @@ public class CreditAnalysisServiceServiceTest {
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
+        CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(true, result.approved());
@@ -92,7 +92,7 @@ public class CreditAnalysisServiceServiceTest {
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
+        CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(true, result.approved());
@@ -112,7 +112,7 @@ public class CreditAnalysisServiceServiceTest {
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
+        CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(true, result.approved());
@@ -133,7 +133,7 @@ public class CreditAnalysisServiceServiceTest {
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         // Call method to being tested
-        CreditAnalysisDomain result = creditAnalysisService.performCreditAnalysis(creditAnalysisDomain);
+        CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         // Assert the expected values
         assertEquals(false, result.approved());
