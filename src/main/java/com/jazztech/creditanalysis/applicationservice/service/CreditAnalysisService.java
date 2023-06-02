@@ -47,9 +47,11 @@ public class CreditAnalysisService {
     // Consult ClientApi
     private ClientApiDto getClientFromClientApi(UUID clientId) throws ClientNotFound {
         final ClientApiDto clientApiDto = clientApi.getClientById(clientId);
+        // Na config do feign não esta com "dismiss404=true", sendo assim caso de client notfound não irá retornar null
         if (clientApiDto.id() == null) {
             throw new ClientNotFound("Client not found for the ID %s", clientId);
         }
+        // Este log é desnecessário
         LOGGER.info("Client consulted successfully");
         return clientApiDto;
     }

@@ -25,6 +25,7 @@ public class CreditAnalysisSearch {
     public List<ResponseDto> byCpf(@Valid String clientCpf) {
         final List<CreditAnalysisEntity> entities = StringUtils.isBlank(clientCpf)
                 ? creditAnalysisRepository.findAll() : creditAnalysisRepository.findByClientCpf(clientCpf);
+        // Este log é desnecessário
         LOGGER.info("Credit Analysis Listed by CPF Successfully");
         return mapper.listEntityToListDto(entities);
     }
@@ -32,6 +33,7 @@ public class CreditAnalysisSearch {
     @Transactional
     public List<ResponseDto> byClientId(UUID clientId) {
         final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findByClientId(clientId);
+        // Este log é desnecessário
         LOGGER.info("Credit Analysis listed by ClientId successfully");
         return mapper.listEntityToListDto(entities);
     }
@@ -39,6 +41,7 @@ public class CreditAnalysisSearch {
     @Transactional
     public List<ResponseDto> all() {
         final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findAll();
+        // Este log é desnecessário
         LOGGER.info("Credit Analysis listed Successfully");
         return mapper.listEntityToListDto(entities);
     }

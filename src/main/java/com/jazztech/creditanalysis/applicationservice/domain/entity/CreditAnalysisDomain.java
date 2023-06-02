@@ -70,6 +70,7 @@ public record CreditAnalysisDomain(
             UUID clientId,
             String clientCpf,
             String clientName,
+            //Para valores monetários utilize BigDecimal
             Double monthlyIncome,
             Double requestedAmount,
             Boolean approved,
@@ -89,8 +90,10 @@ public record CreditAnalysisDomain(
         ValidationCustom.validator(this);
     }
 
+    // melhor criar métodos especificos e mais claros, o que esta sendo atualizado?
     //Data update after ClientApi search
     public CreditAnalysisDomain updateDomain(ClientApiDto clientApiDto) {
+        // utilizando o toBuilder do lombok, não precisa atualizar todos os campos, apenas os que mudaram
         return this.toBuilder()
                 .clientId(this.clientId())
                 .clientCpf(clientApiDto.cpf())
