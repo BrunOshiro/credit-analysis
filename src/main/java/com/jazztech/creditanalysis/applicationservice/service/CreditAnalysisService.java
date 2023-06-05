@@ -15,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class CreditAnalysisService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreditAnalysisService.class);
 

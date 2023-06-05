@@ -8,6 +8,7 @@ import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMappe
 import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.infrastructure.Factory;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class CreditAnalysisServiceServiceTest {
+    private static final Integer ROUND = 2;
+
     @InjectMocks
     CreditAnalysisService creditAnalysisService;
     @Spy
@@ -38,9 +41,9 @@ public class CreditAnalysisServiceServiceTest {
 
         //Assert the expected values
         assertEquals(true, result.approved());
-        assertEquals(3000.00, result.approvedLimit());
-        assertEquals(300.00, result.withdraw());
-        assertEquals(0.15, result.annualInterest());
+        assertEquals(BigDecimal.valueOf(3000.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(300.00).setScale(ROUND,RoundingMode.HALF_UP), result.withdraw());
+        assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
 
     @Test
@@ -57,9 +60,9 @@ public class CreditAnalysisServiceServiceTest {
 
         // Assert the expected values
         assertEquals(false, result.approved());
-        assertEquals(0.00, result.approvedLimit());
-        assertEquals(0.00, result.withdraw());
-        assertEquals(0.00, result.annualInterest());
+        assertEquals(BigDecimal.valueOf(0.00), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(0.00), result.withdraw());
+        assertEquals(BigDecimal.valueOf(0.00), result.annualInterest());
     }
 
     @Test
@@ -77,9 +80,9 @@ public class CreditAnalysisServiceServiceTest {
 
         // Assert the expected values
         assertEquals(true, result.approved());
-        assertEquals(1500.00, result.approvedLimit());
-        assertEquals(150.00, result.withdraw());
-        assertEquals(0.15, result.annualInterest());
+        assertEquals(BigDecimal.valueOf(1500.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(150.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
+        assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
 
     @Test
@@ -96,9 +99,9 @@ public class CreditAnalysisServiceServiceTest {
 
         // Assert the expected values
         assertEquals(true, result.approved());
-        assertEquals(15000.00, result.approvedLimit());
-        assertEquals(1500.00, result.withdraw());
-        assertEquals(0.15, result.annualInterest());
+        assertEquals(BigDecimal.valueOf(15000.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(1500.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
+        assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
 
     @Test
@@ -116,9 +119,9 @@ public class CreditAnalysisServiceServiceTest {
 
         // Assert the expected values
         assertEquals(true, result.approved());
-        assertEquals(7500.00, result.approvedLimit());
-        assertEquals(750.00, result.withdraw());
-        assertEquals(0.15, result.annualInterest());
+        assertEquals(BigDecimal.valueOf(7500.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(750.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
+        assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
 
     @Test
@@ -137,8 +140,8 @@ public class CreditAnalysisServiceServiceTest {
 
         // Assert the expected values
         assertEquals(false, result.approved());
-        assertEquals(0.00, result.approvedLimit());
-        assertEquals(0.00, result.withdraw());
-        assertEquals(0.00, result.annualInterest());
+        assertEquals(BigDecimal.valueOf(0.00), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(0.00), result.withdraw());
+        assertEquals(BigDecimal.valueOf(0.00), result.annualInterest());
     }
 }

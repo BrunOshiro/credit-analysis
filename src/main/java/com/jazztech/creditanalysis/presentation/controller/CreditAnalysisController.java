@@ -38,7 +38,7 @@ public class CreditAnalysisController {
 
     @GetMapping("/search")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ResponseDto> getAllCreditAnalysisByClientIdOrCpfOrJustAll(
+    public List<ResponseDto> searchAllCreditAnalysis(
             @RequestParam(value = "clientId", required = false) UUID clientId,
             @RequestParam(value = "cpf") @Valid String cpf
     ) {

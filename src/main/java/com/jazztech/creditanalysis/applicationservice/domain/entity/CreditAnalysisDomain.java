@@ -3,6 +3,7 @@ package com.jazztech.creditanalysis.applicationservice.domain.entity;
 import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiDto;
 import com.jazztech.creditanalysis.infrastructure.repository.util.ValidationCustom;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 import lombok.Builder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -19,6 +20,7 @@ public record CreditAnalysisDomain(
         BigDecimal annualInterest,
         BigDecimal withdraw
 ) {
+    private static final Integer ROUND = 2;
     private static final BigDecimal MAX_MONTHLY_INCOME = BigDecimal.valueOf(50000.00);
     private static final BigDecimal MAX_APPROVAL_PERCENTAGE = BigDecimal.valueOf(0.30);
     private static final BigDecimal MIN_APPROVAL_PERCENTAGE = BigDecimal.valueOf(0.15);
@@ -54,7 +56,7 @@ public record CreditAnalysisDomain(
         final BigDecimal requestedAmount = updatedClientCreditAnalysisDomain.requestedAmount();
         BigDecimal monthlyIncome = updatedClientCreditAnalysisDomain.monthlyIncome();
 
-        monthlyIncome = (monthlyIncome.compareTo(MAX_MONTHLY_INCOME) <= 0)
+        monthlyIncome = (monthlyIncome.compareTo(MAX_MONTHLY_INCOME) > 0)
                 ? MAX_MONTHLY_INCOME
                 : monthlyIncome;
 
@@ -72,9 +74,9 @@ public record CreditAnalysisDomain(
         if (approved) {
             updatedClientCreditAnalysisDomain = updatedClientCreditAnalysisDomain.toBuilder()
                     .approved(true)
-                    .approvedLimit(approvedLimit)
+                    .approvedLimit(approvedLimit.setScale(ROUND, RoundingMode.HALF_UP))
                     .annualInterest(ANNUAL_INTEREST)
-                    .withdraw(withdraw)
+                    .withdraw(withdraw.setScale(ROUND, RoundingMode.HALF_UP))
                     .build();
         } else {
             updatedClientCreditAnalysisDomain = updatedClientCreditAnalysisDomain.toBuilder()
