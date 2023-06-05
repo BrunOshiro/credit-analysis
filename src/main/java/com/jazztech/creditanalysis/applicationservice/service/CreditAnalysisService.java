@@ -28,15 +28,12 @@ public class CreditAnalysisService {
 
     @Transactional
     public ResponseDto createCreditAnalysis(@Valid RequestDto requestDto) throws ClientNotFound {
-        // Client consult
         final CreditAnalysisDomain creditAnalysisDomain = mapper.dtoToDomain(requestDto);
         final ClientApiDto clientApiDto = getClientFromClientApi(creditAnalysisDomain.clientId());
-        final CreditAnalysisDomain newClientCreditAnalysisDomain = creditAnalysisDomain.updateDomain(clientApiDto);
+        final CreditAnalysisDomain newClientCreditAnalysisDomain = creditAnalysisDomain.updateDomainWithCpfNameFromClientApiData(clientApiDto);
 
-        //Credit Analysis
         final CreditAnalysisDomain newCreditAnalysisCreditAnalysisDomain = creditAnalysisDomain.performCreditAnalysis(newClientCreditAnalysisDomain);
 
-        //Save into database
         final CreditAnalysisEntity creditAnalysisEntity = mapper.domainToEntity(newCreditAnalysisCreditAnalysisDomain);
         final CreditAnalysisEntity savedAnalysis = creditAnalysisRepository.save(creditAnalysisEntity);
 
@@ -44,15 +41,12 @@ public class CreditAnalysisService {
         return mapper.entityToDto(savedAnalysis);
     }
 
-    // Consult ClientApi
     private ClientApiDto getClientFromClientApi(UUID clientId) throws ClientNotFound {
         final ClientApiDto clientApiDto = clientApi.getClientById(clientId);
-        // Na config do feign não esta com "dismiss404=true", sendo assim caso de client notfound não irá retornar null
+        // TODO: Na config do feign não esta com "dismiss404=true", sendo assim caso de client notfound não irá retornar null
         if (clientApiDto.id() == null) {
             throw new ClientNotFound("Client not found for the ID %s", clientId);
         }
-        // Este log é desnecessário
-        LOGGER.info("Client consulted successfully");
         return clientApiDto;
     }
 }

@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-// Minor: vamos utilizar até a versão minor, para não gerar muitas versões de APIs
-// Entidades no plural "credits" ou "credit-analisys"
+// TODO: Minor: vamos utilizar até a versão minor, para não gerar muitas versões de APIs
+// TODO: Entidades no plural "credits" ou "credit-analisys"
 @RequestMapping("api/v.1.0.0/credit/analysis")
 @RequiredArgsConstructor
 @Validated
@@ -35,14 +35,13 @@ public class CreditAnalysisController {
     //Credit Analysis Creation
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    // Prefira trabahar com exceções unchecked, caso contrário terá que pançar por todas as camadas "acima"
+    // TODO: Prefira trabahar com exceções unchecked, caso contrário terá que pançar por todas as camadas "acima"
     public ResponseDto createCreditAnalysis(@RequestBody @Valid RequestDto requestDto) throws ClientNotFound {
         LOGGER.info("Credit Analysis request: " + requestDto.toString());
         return creditAnalysisService.createCreditAnalysis(requestDto);
     }
 
-    // Não é necessário um novo endpoint para consulta com query parameters, o id do cliente ou cpf são filtros no "getAll"
-    //Search by CPF or ClientId
+    // TODO: Não é necessário um novo endpoint para consulta com query parameters, o id do cliente ou cpf são filtros no "getAll"
     @GetMapping("/")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ResponseDto> getCreditAnalysisByCpfOrClientId(
@@ -58,7 +57,6 @@ public class CreditAnalysisController {
         }
     }
 
-    //Search all Contracts
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public List<ResponseDto> getAllCreditAnalysis() {
