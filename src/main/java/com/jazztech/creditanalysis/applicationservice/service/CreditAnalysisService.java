@@ -3,7 +3,6 @@ package com.jazztech.creditanalysis.applicationservice.service;
 import com.jazztech.creditanalysis.applicationservice.domain.entity.CreditAnalysisDomain;
 import com.jazztech.creditanalysis.infrastructure.clientsapi.ClientApi;
 import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiDto;
-import com.jazztech.creditanalysis.infrastructure.exceptions.ClientNotFound;
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMapper;
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisRepository;
 import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalysisEntity;
@@ -42,11 +41,6 @@ public class CreditAnalysisService {
     }
 
     private ClientApiDto getClientFromClientApi(UUID clientId) {
-        final ClientApiDto clientApiDto = clientApi.getClientById(clientId);
-        // TODO: Na config do feign não esta com "dismiss404=true", sendo assim caso de client notfound não irá retornar null
-        if (clientApiDto.id() == null) {
-            throw new ClientNotFound("Client not found for the ID %s", clientId);
-        }
-        return clientApiDto;
+        return clientApi.getClientById(clientId);
     }
 }

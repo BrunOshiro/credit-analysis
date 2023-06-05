@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Component
-@FeignClient(name = "client", url = "http://localhost:8080")
+@FeignClient(name = "client", url = "http://localhost:8080", configuration = CustomFeignConfiguration.class)
 public interface ClientApi {
     @GetMapping("/api/v1.0/clients/{id}")
     ClientApiDto getClientById(@PathVariable("id")UUID clientId);

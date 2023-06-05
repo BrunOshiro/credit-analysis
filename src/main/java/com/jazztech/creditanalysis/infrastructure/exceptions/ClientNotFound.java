@@ -1,9 +1,7 @@
 package com.jazztech.creditanalysis.infrastructure.exceptions;
 
-import java.util.UUID;
-
 public class ClientNotFound extends RuntimeException {
-    public ClientNotFound(String message, UUID clientId) {
+    public ClientNotFound(String message, String clientId) {
         super(String.format(message, clientId));
     }
 }
