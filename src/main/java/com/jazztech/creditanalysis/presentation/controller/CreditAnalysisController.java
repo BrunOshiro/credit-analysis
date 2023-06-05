@@ -2,7 +2,6 @@ package com.jazztech.creditanalysis.presentation.controller;
 
 import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysisSearch;
 import com.jazztech.creditanalysis.applicationservice.service.CreditAnalysisService;
-import com.jazztech.creditanalysis.infrastructure.exceptions.ClientNotFound;
 import com.jazztech.creditanalysis.presentation.dto.RequestDto;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
 import jakarta.validation.Valid;
@@ -22,9 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-// TODO: Minor: vamos utilizar até a versão minor, para não gerar muitas versões de APIs
-// TODO: Entidades no plural "credits" ou "credit-analisys"
-@RequestMapping("api/v.1.0.0/credit/analysis")
+@RequestMapping("api/v1/credits/analysis")
 @RequiredArgsConstructor
 @Validated
 public class CreditAnalysisController {
@@ -32,35 +29,28 @@ public class CreditAnalysisController {
     private final CreditAnalysisService creditAnalysisService;
     private final CreditAnalysisSearch creditAnalysisSearch;
 
-    //Credit Analysis Creation
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
-    // TODO: Prefira trabahar com exceções unchecked, caso contrário terá que pançar por todas as camadas "acima"
-    public ResponseDto createCreditAnalysis(@RequestBody @Valid RequestDto requestDto) throws ClientNotFound {
+    public ResponseDto createCreditAnalysis(@RequestBody @Valid RequestDto requestDto) {
         LOGGER.info("Credit Analysis request: " + requestDto.toString());
         return creditAnalysisService.createCreditAnalysis(requestDto);
     }
 
-    // TODO: Não é necessário um novo endpoint para consulta com query parameters, o id do cliente ou cpf são filtros no "getAll"
-    @GetMapping("/")
+    @GetMapping("/search")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ResponseDto> getCreditAnalysisByCpfOrClientId(
+    public List<ResponseDto> getAllCreditAnalysisByClientIdOrCpfOrJustAll(
             @RequestParam(value = "clientId", required = false) UUID clientId,
             @RequestParam(value = "cpf") @Valid String cpf
     ) {
         if (clientId != null) {
             LOGGER.info("Search Credit Analysis by ClientId: " + clientId + "performed successfully");
             return creditAnalysisSearch.byClientId(clientId);
-        } else {
+        } else if (cpf != null) {
             LOGGER.info("Search Credit Analysis by CPF: " + cpf + "performed successfully");
             return creditAnalysisSearch.byCpf(cpf);
+        } else {
+            LOGGER.info("Search All Credit Analysis performed successfully");
+            return creditAnalysisSearch.all();
         }
-    }
-
-    @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<ResponseDto> getAllCreditAnalysis() {
-        LOGGER.info("Search All Credit Analysis");
-        return creditAnalysisSearch.all();
     }
 }

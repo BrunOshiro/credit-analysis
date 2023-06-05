@@ -27,7 +27,7 @@ public class CreditAnalysisService {
     private final CreditAnalysisMapper mapper;
 
     @Transactional
-    public ResponseDto createCreditAnalysis(@Valid RequestDto requestDto) throws ClientNotFound {
+    public ResponseDto createCreditAnalysis(@Valid RequestDto requestDto) {
         final CreditAnalysisDomain creditAnalysisDomain = mapper.dtoToDomain(requestDto);
         final ClientApiDto clientApiDto = getClientFromClientApi(creditAnalysisDomain.clientId());
         final CreditAnalysisDomain newClientCreditAnalysisDomain = creditAnalysisDomain.updateDomainWithCpfNameFromClientApiData(clientApiDto);
@@ -41,7 +41,7 @@ public class CreditAnalysisService {
         return mapper.entityToDto(savedAnalysis);
     }
 
-    private ClientApiDto getClientFromClientApi(UUID clientId) throws ClientNotFound {
+    private ClientApiDto getClientFromClientApi(UUID clientId) {
         final ClientApiDto clientApiDto = clientApi.getClientById(clientId);
         // TODO: Na config do feign não esta com "dismiss404=true", sendo assim caso de client notfound não irá retornar null
         if (clientApiDto.id() == null) {

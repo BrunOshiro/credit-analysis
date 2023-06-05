@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -20,8 +19,7 @@ public class CreditAnalysisSearch {
 
     @Transactional
     public List<ResponseDto> byCpf(@Valid String clientCpf) {
-        final List<CreditAnalysisEntity> entities = StringUtils.isBlank(clientCpf)
-                ? creditAnalysisRepository.findAll() : creditAnalysisRepository.findByClientCpf(clientCpf);
+        final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findByClientCpf(clientCpf);
         return mapper.listEntityToListDto(entities);
     }
 
