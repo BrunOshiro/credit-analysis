@@ -40,7 +40,7 @@ public class CreditAnalysisController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<ResponseDto> searchAllCreditAnalysis(
             @RequestParam(value = "clientId", required = false) UUID clientId,
-            @RequestParam(value = "cpf") @Valid String cpf
+            @RequestParam(value = "cpf", required = false) @Valid String cpf
     ) {
         if (clientId != null) {
             LOGGER.info("Search Credit Analysis by ClientId: " + clientId + "performed successfully");
