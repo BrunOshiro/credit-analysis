@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: credit-analysis-app
+    name: credit-analysis
 
   cloud:
     openfeign:

@@ -1,7 +1,7 @@
 services:
   postgres:
-    image: credit-analysis
-    container_name: postgres-credit-analysis
+    image: postgres
+    container_name: postgres1
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: senha123
