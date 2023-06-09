@@ -54,15 +54,15 @@ public class CreditAnalysisServiceTest {
                 .thenReturn(Factory.creditAnalysisEntityFactory());
 
         RequestDto requestDto = Factory.requestDtoFactory().toBuilder()
-                .monthlyIncome(BigDecimal.valueOf(10000.00))
-                .requestedAmount(BigDecimal.valueOf(5000.00))
+                .monthlyIncome(BigDecimal.valueOf(10_000.00))
+                .requestedAmount(BigDecimal.valueOf(5_000.00))
                 .build();
 
         ResponseDto responseDto = creditAnalysisService.createCreditAnalysis(requestDto);
 
         assertNotNull(responseDto);
         assertTrue(responseDto.approved());
-        assertEquals(BigDecimal.valueOf(3000.00).setScale(ROUND, RoundingMode.HALF_UP), responseDto.approvedLimit());
+        assertEquals(BigDecimal.valueOf(3_000.00).setScale(ROUND, RoundingMode.HALF_UP), responseDto.approvedLimit());
         assertEquals(BigDecimal.valueOf(300.00).setScale(ROUND, RoundingMode.HALF_UP), responseDto.withdraw());
         assertEquals(BigDecimal.valueOf(0.15), responseDto.annualInterest());
     }
@@ -73,8 +73,8 @@ public class CreditAnalysisServiceTest {
                 .thenReturn(Factory.clientApiDtoFactory());
         when(creditAnalysisRepository.save(creditAnalysisEntityCaptor.capture()))
                 .thenReturn(Factory.creditAnalysisEntityFactory().toBuilder()
-                        .monthlyIncome(BigDecimal.valueOf(5000.00))
-                        .requestedAmount(BigDecimal.valueOf(7000.00))
+                        .monthlyIncome(BigDecimal.valueOf(5_000.00))
+                        .requestedAmount(BigDecimal.valueOf(7_000.00))
                         .approved(false)
                         .approvedLimit(BigDecimal.valueOf(0.00))
                         .annualInterest(BigDecimal.valueOf(0.00))
@@ -82,8 +82,8 @@ public class CreditAnalysisServiceTest {
                         .build());
 
         RequestDto requestDto = Factory.requestDtoFactory().toBuilder()
-                .monthlyIncome(BigDecimal.valueOf(5000.00))
-                .requestedAmount(BigDecimal.valueOf(7000.00))
+                .monthlyIncome(BigDecimal.valueOf(5_000.00))
+                .requestedAmount(BigDecimal.valueOf(7_000.00))
                 .build();
 
         ResponseDto responseDto = creditAnalysisService.createCreditAnalysis(requestDto);
@@ -99,15 +99,15 @@ public class CreditAnalysisServiceTest {
     public void should_get_credit_analysis_approved_min_amount() {
         RequestDto requestDto = Factory.requestDtoFactory()
                 .toBuilder()
-                .monthlyIncome(BigDecimal.valueOf(10000.00))
-                .requestedAmount(BigDecimal.valueOf(5001.00))
+                .monthlyIncome(BigDecimal.valueOf(10_000.00))
+                .requestedAmount(BigDecimal.valueOf(5_001.00))
                 .build();
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         assertEquals(true, result.approved());
-        assertEquals(BigDecimal.valueOf(1500.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(1_500.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
         assertEquals(BigDecimal.valueOf(150.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
         assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
@@ -115,16 +115,16 @@ public class CreditAnalysisServiceTest {
     @Test
     public void should_get_credit_analysis_approved_max_monthly_income_max_approval() {
         RequestDto requestDto = Factory.requestDtoFactory().toBuilder()
-                .monthlyIncome(BigDecimal.valueOf(75000.00))
-                .requestedAmount(BigDecimal.valueOf(20000.00))
+                .monthlyIncome(BigDecimal.valueOf(75_000.00))
+                .requestedAmount(BigDecimal.valueOf(20_000.00))
                 .build();
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         assertEquals(true, result.approved());
-        assertEquals(BigDecimal.valueOf(15000.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
-        assertEquals(BigDecimal.valueOf(1500.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
+        assertEquals(BigDecimal.valueOf(15_000.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(1_500.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
         assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
 
@@ -132,15 +132,15 @@ public class CreditAnalysisServiceTest {
     public void should_get_credit_analysis_approved_max_monthly_income_min_approval() {
         RequestDto requestDto = Factory.requestDtoFactory()
                 .toBuilder()
-                .monthlyIncome(BigDecimal.valueOf(100000.00))
-                .requestedAmount(BigDecimal.valueOf(50000.00))
+                .monthlyIncome(BigDecimal.valueOf(100_000.00))
+                .requestedAmount(BigDecimal.valueOf(50_000.00))
                 .build();
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
         CreditAnalysisDomain result = creditAnalysisDomain.performCreditAnalysis(creditAnalysisDomain);
 
         assertEquals(true, result.approved());
-        assertEquals(BigDecimal.valueOf(7500.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
+        assertEquals(BigDecimal.valueOf(7_500.00).setScale(ROUND, RoundingMode.HALF_UP), result.approvedLimit());
         assertEquals(BigDecimal.valueOf(750.00).setScale(ROUND, RoundingMode.HALF_UP), result.withdraw());
         assertEquals(BigDecimal.valueOf(0.15), result.annualInterest());
     }
@@ -150,8 +150,8 @@ public class CreditAnalysisServiceTest {
         RequestDto requestDto;
         requestDto = Factory.requestDtoFactory()
                 .toBuilder()
-                .monthlyIncome(BigDecimal.valueOf(100000.00))
-                .requestedAmount(BigDecimal.valueOf(51000.00))
+                .monthlyIncome(BigDecimal.valueOf(100_000.00))
+                .requestedAmount(BigDecimal.valueOf(51_000.00))
                 .build();
         CreditAnalysisDomain creditAnalysisDomain = mapperImpl.dtoToDomain(requestDto);
 
