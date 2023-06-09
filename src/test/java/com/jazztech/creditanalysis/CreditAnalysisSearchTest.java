@@ -14,8 +14,6 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -30,13 +28,6 @@ public class CreditAnalysisSearchTest {
     private CreditAnalysisRepository creditAnalysisRepository;
     @InjectMocks
     private CreditAnalysisSearch creditAnalysisSearch;
-
-    @Captor
-    private ArgumentCaptor<UUID> clientIdCaptor;
-    @Captor
-    private ArgumentCaptor<String> clientCpfCaptor;
-    @Captor
-    private ArgumentCaptor<UUID> creditAnalysisIdCaptor;
 
     @Test
     void should_find_credit_analysis_by_client_id() {
