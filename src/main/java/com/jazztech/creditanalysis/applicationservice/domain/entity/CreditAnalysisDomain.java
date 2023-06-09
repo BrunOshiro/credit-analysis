@@ -1,6 +1,6 @@
 package com.jazztech.creditanalysis.applicationservice.domain.entity;
 
-import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiDto;
+import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiResponseDto;
 import com.jazztech.creditanalysis.infrastructure.repository.util.ValidationCustom;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -90,10 +90,10 @@ public record CreditAnalysisDomain(
         return updatedClientCreditAnalysisDomain;
     }
 
-    public CreditAnalysisDomain updateDomainWithCpfNameFromClientApiData(ClientApiDto clientApiDto) {
+    public CreditAnalysisDomain updateDomainWithCpfNameFromClientApiData(ClientApiResponseDto clientApiResponseDto) {
         return this.toBuilder()
-                .clientCpf(clientApiDto.cpf())
-                .clientName(clientApiDto.nome())
+                .clientCpf(clientApiResponseDto.cpf())
+                .clientName(clientApiResponseDto.nome())
                 .build();
     }
 }

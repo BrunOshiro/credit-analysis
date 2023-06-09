@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record ClientApiDto(
+public record ClientApiResponseDto(
         UUID id,
         String nome,
         String cpf,

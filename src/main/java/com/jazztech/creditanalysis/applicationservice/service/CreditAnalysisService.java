@@ -2,7 +2,7 @@ package com.jazztech.creditanalysis.applicationservice.service;
 
 import com.jazztech.creditanalysis.applicationservice.domain.entity.CreditAnalysisDomain;
 import com.jazztech.creditanalysis.infrastructure.clientsapi.ClientApi;
-import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiDto;
+import com.jazztech.creditanalysis.infrastructure.clientsapi.dto.ClientApiResponseDto;
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMapper;
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisRepository;
 import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalysisEntity;
@@ -30,8 +30,9 @@ public class CreditAnalysisService {
     @Transactional
     public ResponseDto createCreditAnalysis(@Valid RequestDto requestDto) {
         final CreditAnalysisDomain creditAnalysisDomain = mapper.dtoToDomain(requestDto);
-        final ClientApiDto clientApiDto = getClientFromClientApi(creditAnalysisDomain.clientId());
-        final CreditAnalysisDomain newClientCreditAnalysisDomain = creditAnalysisDomain.updateDomainWithCpfNameFromClientApiData(clientApiDto);
+        final ClientApiResponseDto clientApiResponseDto = getClientFromClientApi(creditAnalysisDomain.clientId());
+        final CreditAnalysisDomain newClientCreditAnalysisDomain =
+                creditAnalysisDomain.updateDomainWithCpfNameFromClientApiData(clientApiResponseDto);
 
         final CreditAnalysisDomain newCreditAnalysisCreditAnalysisDomain = creditAnalysisDomain.performCreditAnalysis(newClientCreditAnalysisDomain);
 
@@ -42,7 +43,7 @@ public class CreditAnalysisService {
         return mapper.entityToDto(savedAnalysis);
     }
 
-    private ClientApiDto getClientFromClientApi(UUID clientId) {
+    private ClientApiResponseDto getClientFromClientApi(UUID clientId) {
         return clientApi.getClientById(clientId);
     }
 }
