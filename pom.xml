@@ -166,7 +166,6 @@
                 <configuration>
                     <excludes>
                         <exclude>**/dto/**</exclude>
-                        <exclude>**/entity/**</exclude>
                         <exclude>**/repository/**</exclude>
                         <exclude>**/config/**</exclude>
                         <exclude>**/controller/**</exclude>
