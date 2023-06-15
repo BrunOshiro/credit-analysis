@@ -29,14 +29,14 @@ public class CreditAnalysisController {
     private final CreditAnalysisService creditAnalysisService;
     private final CreditAnalysisSearch creditAnalysisSearch;
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseDto createCreditAnalysis(@RequestBody @Valid RequestDto requestDto) {
         LOGGER.info("Credit Analysis request: " + requestDto.toString());
         return creditAnalysisService.createCreditAnalysis(requestDto);
     }
 
-    @GetMapping("/search")
+    @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public List<ResponseDto> searchAllCreditAnalysis(
             @RequestParam(value = "clientId", required = false) UUID clientId,

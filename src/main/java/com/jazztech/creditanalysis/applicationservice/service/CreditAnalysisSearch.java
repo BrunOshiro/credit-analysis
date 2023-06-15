@@ -4,7 +4,6 @@ import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMappe
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisRepository;
 import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalysisEntity;
 import com.jazztech.creditanalysis.presentation.dto.ResponseDto;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -17,19 +16,16 @@ public class CreditAnalysisSearch {
     private final CreditAnalysisRepository creditAnalysisRepository;
     private final CreditAnalysisMapper mapper;
 
-    @Transactional
     public List<ResponseDto> byCpf(@Valid String clientCpf) {
         final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findByClientCpf(clientCpf);
         return mapper.listEntityToListDto(entities);
     }
 
-    @Transactional
     public List<ResponseDto> byClientId(UUID clientId) {
         final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findByClientId(clientId);
         return mapper.listEntityToListDto(entities);
     }
 
-    @Transactional
     public List<ResponseDto> all() {
         final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findAll();
         return mapper.listEntityToListDto(entities);
