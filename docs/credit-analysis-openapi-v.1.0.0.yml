@@ -4,7 +4,7 @@ info:
   description: API for credit analysis
   version: 1.0.0
 servers:
-  - url: http://localhost:9001
+  - url: http://localhost:8081
 tags:
   - name: credit analysis
 paths:
@@ -20,7 +20,8 @@ paths:
               type: object
               properties:
                 clientId:
-                  type: integer
+                  type: string
+                  format: uuid
                   description: Client ID
                 monthlyIncome:
                   type: number
@@ -39,7 +40,8 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: integer
+                    type: string
+                    format: uuid
                     description: Analysis ID
                   approved:
                     type: boolean
@@ -49,8 +51,9 @@ paths:
                     format: float
                     description: Approved loan limit
                   withdraw:
-                    type: boolean
-                    description: Indicates if the loan amount was withdrawn
+                    type: number
+                    format: float
+                    description: Indicates the loan amount to withdrawn
                   annualInterest:
                     type: number
                     format: float
@@ -65,6 +68,19 @@ paths:
       summary: Get all Analysis
       tags:
         - credit analysis
+      description: Client ID or CPF can be provided as query parameters in order to return all the credit analysis for a specific client
+      parameters:
+        - name: clientId
+          in: query
+          description: Client ID
+          schema:
+            type: string
+            format: uuid
+        - name: cpf
+          in: query
+          description: Client CPF
+          schema:
+            type: string
       responses:
         '200':
           description: Successful response
@@ -75,7 +91,7 @@ paths:
                 items:
                   properties:
                     id:
-                      type: integer
+                      type: string
                       description: Analysis ID
                     approved:
                       type: boolean
@@ -101,51 +117,5 @@ paths:
                     date:
                       type: string
                       format: date-time
-        '404':
-          description: Analysis not found
-  /credit/analysis/{cpf}:
-    get:
-      summary: Get Analysis by CPF Endpoint
-      tags:
-        - credit analysis
-      parameters:
-        - name: cpf
-          in: path
-          description: Client CPF
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: Analysis ID
-                  approved:
-                    type: boolean
-                    description: Indicates if the loan was approved or not
-                  approvedLimit:
-                    type: number
-                    format: float
-                    description: Approved loan limit
-                  requestedAmount:
-                    type: number
-                    format: float
-                    description: Requested loan amount
-                  withdraw:
-                    type: boolean
-                    description: Indicates if the loan amount was withdrawn
-                  annualInterest:
-                    type: number
-                    format: float
-                    description: Annual interest rate for the loan in percentage
-                  date:
-                    type: string
-                    format: date-time
         '404':
           description: Analysis not found
