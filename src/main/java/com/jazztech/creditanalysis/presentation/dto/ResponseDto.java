@@ -1,17 +1,20 @@
 package com.jazztech.creditanalysis.presentation.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.Builder;
 
+@Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ResponseDto(
         UUID id,
         Boolean approved,
-        Double approvedLimit,
-        Double withdraw,
-        Double annualInterest,
+        BigDecimal approvedLimit,
+        BigDecimal withdraw,
+        BigDecimal annualInterest,
         UUID clientId,
-        LocalDate date
+        LocalDateTime date
 ) {
 }

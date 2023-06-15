@@ -1,8 +1,8 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
-    name: client-app
+    name: credit-analysis
 
   cloud:
     openfeign:
@@ -30,7 +30,7 @@ spring:
       initialization-fail-timeout: -1
       validation-timeout: 1000
   jpa:
-    generate-ddl: false
+    generate-ddl: true
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
 

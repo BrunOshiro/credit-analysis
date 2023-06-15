@@ -1,12 +1,15 @@
 package com.jazztech.creditanalysis.presentation.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.Builder;
 
+@Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RequestDto(
         UUID clientId,
-        Double monthlyIncome,
-        Double requestedAmount
+        BigDecimal monthlyIncome,
+        BigDecimal requestedAmount
 ) {
 }
