@@ -1,5 +1,6 @@
 package com.jazztech.creditanalysis.applicationservice.service;
 
+import com.jazztech.creditanalysis.infrastructure.exceptions.CreditAnalysisNotFound;
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisMapper;
 import com.jazztech.creditanalysis.infrastructure.repository.CreditAnalysisRepository;
 import com.jazztech.creditanalysis.infrastructure.repository.entity.CreditAnalysisEntity;
@@ -28,7 +29,7 @@ public class CreditAnalysisSearch {
 
     public ResponseDto byId(UUID id) {
         final CreditAnalysisEntity entity = creditAnalysisRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new CreditAnalysisNotFound("Credit Analysis " + id + " not found"));
         return mapper.entityToDto(entity);
     }
 
