@@ -2,9 +2,9 @@ openapi: 3.0.0
 info:
   title: Credit Analysis API
   description: API for credit analysis
-  version: 1.0.0
+  version: 1.0.1
 servers:
-  - url: http://localhost:8081
+  - url: http://localhost:9001
 tags:
   - name: credit analysis
 paths:
@@ -20,8 +20,7 @@ paths:
               type: object
               properties:
                 clientId:
-                  type: string
-                  format: uuid
+                  type: integer
                   description: Client ID
                 monthlyIncome:
                   type: number
@@ -40,8 +39,7 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: string
-                    format: uuid
+                    type: integer
                     description: Analysis ID
                   approved:
                     type: boolean
@@ -52,8 +50,8 @@ paths:
                     description: Approved loan limit
                   withdraw:
                     type: number
-                    format: float
-                    description: Indicates the loan amount to withdrawn
+                    example: 1000
+                    description: Indicates amount was withdrawn
                   annualInterest:
                     type: number
                     format: float
@@ -68,19 +66,20 @@ paths:
       summary: Get all Analysis
       tags:
         - credit analysis
-      description: Client ID or CPF can be provided as query parameters in order to return all the credit analysis for a specific client
       parameters:
+        - name: cpf
+          in: query
+          description: client CPF
+          required: false
+          schema:
+            type: string
         - name: clientId
           in: query
-          description: Client ID
+          description: client id
+          required: false
           schema:
             type: string
             format: uuid
-        - name: cpf
-          in: query
-          description: Client CPF
-          schema:
-            type: string
       responses:
         '200':
           description: Successful response
@@ -91,7 +90,7 @@ paths:
                 items:
                   properties:
                     id:
-                      type: string
+                      type: integer
                       description: Analysis ID
                     approved:
                       type: boolean
@@ -105,8 +104,9 @@ paths:
                       format: float
                       description: Requested loan amount
                     withdraw:
-                      type: boolean
-                      description: Indicates if the loan amount was withdrawn
+                      type: number
+                      example: 1000
+                      description: Indicates amount was withdrawn
                     annualInterest:
                       type: number
                       format: float
@@ -119,3 +119,51 @@ paths:
                       format: date-time
         '404':
           description: Analysis not found
+  /credit/analysis/{id}:
+    get:
+      summary: Get Analysis by ID Endpoint
+      tags:
+        - credit analysis
+      parameters:
+        - name: id
+          in: path
+          description: Analysis ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Analysis ID
+                  approved:
+                    type: boolean
+                    description: Indicates if the loan was approved or not
+                  approvedLimit:
+                    type: number
+                    format: float
+                    description: Approved loan limit
+                  requestedAmount:
+                    type: number
+                    format: float
+                    description: Requested loan amount
+                  withdraw:
+                    type: number
+                    example: 2000
+                    description: Indicates amount was withdrawn
+                  annualInterest:
+                    type: number
+                    format: float
+                    description: Annual interest rate for the loan in percentage
+                  date:
+                    type: string
+                    format: date-time
+        '404':
+          description: Analysis not found
+

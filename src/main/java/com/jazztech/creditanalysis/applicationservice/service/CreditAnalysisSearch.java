@@ -26,6 +26,12 @@ public class CreditAnalysisSearch {
         return mapper.listEntityToListDto(entities);
     }
 
+    public ResponseDto byId(UUID id) {
+        final CreditAnalysisEntity entity = creditAnalysisRepository.findById(id)
+                .orElse(null);
+        return mapper.entityToDto(entity);
+    }
+
     public List<ResponseDto> all() {
         final List<CreditAnalysisEntity> entities = creditAnalysisRepository.findAll();
         return mapper.listEntityToListDto(entities);
