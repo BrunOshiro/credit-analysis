@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8083:8082"
+      - "8081:8081"
     networks:
       - jazz-study-apis-network
     depends_on:
