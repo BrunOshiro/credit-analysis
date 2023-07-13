@@ -17,7 +17,7 @@ spring:
     init:
       continue-on-error: true
   datasource:
-    url: jdbc:postgresql://localhost:5430/postgres
+    url: jdbc:postgresql://postgres-creditanalysis:5432/postgres
     username: admin
     password: senha123
     driver-class-name: org.postgresql.Driver
@@ -35,11 +35,4 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
 
 url:
-  clientApi.host: http://localhost:8080/api/v1.0/clients
-
-#  spring.cloud.openfeign.client.config.default.connectTimeout=5000
-#  spring.cloud.openfeign.client.config.default.readTimeout=5000
-#  spring.cloud.openfeign.client.config.default.loggerLevel=full
-#  spring.cloud.openfeign.client.config.default.errorDecoder=org.springframework.cloud.openfeign.FeignClientUsingPropertiesTests.DefaultErrorDecoder
-#  spring.cloud.openfeign.client.config.default.retryer=org.springframework.cloud.openfeign.FeignClientUsingPropertiesTests.NoRetryer
-#  spring.cloud.openfeign.client.config.default.dismiss404=true
+  clientApi.host: http://172.21.0.1:8080/api/v1.0/clients

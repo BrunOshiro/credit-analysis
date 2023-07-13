@@ -1,15 +1,31 @@
 services:
-  postgres:
+  postgres-creditanalysis:
     image: postgres
-    container_name: postgres1
+    container_name: credit-analysis
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: senha123
     ports:
       - "5430:5432"
-
-  adminer:
-    image: adminer
-    restart: always
+    networks:
+      - jazz-study-apis-network
+  creditanalysisapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 9000:8080
+      - "8083:8082"
+    networks:
+      - jazz-study-apis-network
+    depends_on:
+      - postgres-creditanalysis
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/postgres
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=senha123
+
+networks:
+  jazz-study-apis-network:
+    external: true
+volumes:
+  postgres-data:
